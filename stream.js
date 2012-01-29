@@ -3,14 +3,15 @@ d3.csv("commodity.csv", function(data) {
     var colors         = [ "#446E86", "#3E9CA4", "#A7BDA8", "#C1CAAF", "#D3DDBB", "#2A0606", "#1E5957", "#AEAC7C", "#E9CC88", "#5B8584" ];
     var commodityData = commodityTypes.map(function(type) {
         return data.map(function(row, i) {
-            return { x: i, y: 40.0 + parseFloat(row[type]), t: type };
+            return { x: i, y: 32.0 + parseFloat(row[type]), t: type };
         });
     });
     var commodityPrices = d3.layout.stack().offset("silhouette")(commodityData);
 
     var w = 2000,
         h = 600,
-        base = h - 20,
+        m = 20,
+        base = h,
         mx = data.length - 1,
         my = d3.max(commodityPrices, function(d) {
           return d3.max(d, function(d) {
@@ -32,7 +33,7 @@ d3.csv("commodity.csv", function(data) {
     var vis = d3.select("#chart")
       .append("svg")
         .attr("width", w)
-        .attr("height", h);
+        .attr("height", h + m);
 
     vis.selectAll("path")
         .data(commodityPrices)
