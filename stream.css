@@ -1,3 +1,39 @@
 #chart {
   font: 10px sans-serif;
 }
+.axis {
+  shape-rendering: crispEdges;
+}
+
+.x.axis line {
+  stroke: #fff;
+  stroke-dasharray: 3,3,3;
+}
+
+.x.axis .minor {
+  stroke-opacity: .5;
+}
+
+.x.axis path {
+  display: none;
+}
+
+table {
+    font-size: 12pt;
+}
+
+table td {
+    color: #fff;
+    padding: 5px;
+}
+
+.nickel { background-color: #446E86; }
+.lead { background-color: #3E9CA4; }
+.iron { background-color: #A7BDA8; color: #000; }
+.gold { background-color: #C1CAAF; color: #000; }
+.copper { background-color: #D3DDBB; color: #000; }
+.aluminium { background-color: #2A0606; }
+.zinc { background-color: #1E5957; }
+.uranium { background-color: #AEAC7C; }
+.tin { background-color: #E9CC88; color: #000; }
+.silver { background-color: #5B8584; }

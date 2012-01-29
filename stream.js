@@ -1,24 +1,28 @@
 d3.csv("commodity.csv", function(data) {
-    var n = 20, // number of layers
-        m = 200, // number of samples per layer
-        color = d3.interpolateRgb("#aad", "#556");
-
-    var commodityTypes = [ "nickel", "lead", "iron", "gold", "copper", "zinc", "uranium", "tin", "silver" ];
+    var commodityTypes = d3.keys(data[0]);
+    var colors         = [ "#446E86", "#3E9CA4", "#A7BDA8", "#C1CAAF", "#D3DDBB", "#2A0606", "#1E5957", "#AEAC7C", "#E9CC88", "#5B8584" ];
     var commodityData = commodityTypes.map(function(type) {
         return data.map(function(row, i) {
-            return { x: i, y: +row[type] };
+            return { x: i, y: 40.0 + parseFloat(row[type]), t: type };
         });
     });
     var commodityPrices = d3.layout.stack().offset("silhouette")(commodityData);
 
-    var w = 1960,
-        h = 500,
-        mx = m - 1,
+    var w = 2000,
+        h = 600,
+        base = h - 20,
+        mx = data.length - 1,
         my = d3.max(commodityPrices, function(d) {
           return d3.max(d, function(d) {
             return d.y0 + d.y;
           });
         });
+
+    var parse = d3.time.format("%Y-%m").parse;
+    var from = parse("2002-01"), to = parse("2011-12");
+    var x = d3.time.scale().range([0, w]),
+        xAxis = d3.svg.axis().scale(x).tickSize(-base);
+    x.domain([from, to]);
 
     var area = d3.svg.area()
         .x(function(d) { return d.x * w / mx; })
@@ -33,7 +37,12 @@ d3.csv("commodity.csv", function(data) {
     vis.selectAll("path")
         .data(commodityPrices)
       .enter().append("path")
-        .style("fill", function() { return color(Math.random()); })
+        .style("fill", function(d, i) { return d3.rgb(colors[i]); })
         .attr("d", area);
+
+    vis.append("svg:g")
+        .attr("class", "x axis")
+        .attr("transform", "translate(0," + base + ")")
+        .call(xAxis);
 });
 
