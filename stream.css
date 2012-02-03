@@ -18,12 +18,13 @@
   display: none;
 }
 
-table {
+p {
     font-size: 12pt;
+    color: #fff;
+    padding: 5px;
 }
 
-table td {
-    color: #fff;
+p span {
     padding: 5px;
 }
 
